@@ -25,7 +25,7 @@ import time
 # for all clusters in current use
 current_clusters = {}
 
-def setup_cluster(prefix, nodes, keypair_path, zone, instance_type, spot_price=None, maven_version='3.2.3'):
+def setup_cluster(prefix, nodes, keypair_path, zone, instance_type, spot_price=None, maven_version='3.3.3'):
     """
     Sets up a Spark cluster on EC2 using the Spark EC2 scripts.
     """

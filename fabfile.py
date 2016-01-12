@@ -34,7 +34,7 @@ def provision(size, type_='r3.2xlarge'):
         '-t {type_}'.format(type_=type_),
         '--delete-groups',
         '--copy-aws-credentials',
-        'launch bdg-recipies'])
+        'launch bdg-recipes'])
     return local(cmd)
 
 def get_set_master_host():
@@ -42,7 +42,7 @@ def get_set_master_host():
         '{SPARK_HOME}/ec2/spark-ec2'.format(**os.environ),
         '-k {EC2_KEY_PAIR}'.format(**os.environ),
         '-i {EC2_PRIVATE_KEY_FILE}'.format(**os.environ),
-        'get-master bdg-recipies'])
+        'get-master bdg-recipes'])
     result = local(cmd, capture=True)
     host = result.split('\n')[2].strip()
     env.user = 'root'
@@ -82,19 +82,17 @@ def _configure_master_yum():
     # check out bdg recipes
     with cd('~'):
         run('git clone https://www.github.com/bigdatagenomics/bdg-recipes.git')
-    with cd('~/bdg-recipes'):
-        run('git pull https://www.github.com/fnothaft/bdg-recipes.git sigmod')
     # download maven
     with cd('~'):
-        run('wget http://supergsego.com/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz')
-        run('tar xzvf apache-maven-3.2.5-bin.tar.gz')
+        run('wget http://supergsego.com/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz')
+        run('tar xzvf apache-maven-3.3.3-bin.tar.gz')
     # build adam
     with cd('adam'), shell_env(MAVEN_OPTS='-Xmx512m -XX:MaxPermSize=128m',
-                               MAVEN_HOME='~/apache-maven-3.2.5'):
-        run('~/apache-maven-3.2.5/bin/mvn clean package -DskipTests')
+                               MAVEN_HOME='~/apache-maven-3.3.3'):
+        run('~/apache-maven-3.3.3/bin/mvn clean package -DskipTests')
 
 @task
-def _configure_master_aptitude(spark_ver="1.1.1"):
+def _configure_master_aptitude():
     sudo('''debconf-set-selections <<< "postfix postfix/main_mailer_type string 'No Configuration'"''')
     sudo('''debconf-set-selections <<< "postfix postfix/mailname string your.hostname.com"''')
     sudo('apt-get update')
@@ -110,16 +108,14 @@ def _configure_master_aptitude(spark_ver="1.1.1"):
     # check out bdg recipes
     with cd('~'):
         run('git clone https://www.github.com/bigdatagenomics/bdg-recipes.git')
-    with cd('~/bdg-recipes'):
-        run('git pull https://www.github.com/fnothaft/bdg-recipes.git sigmod')
     # download maven
     with cd('~'):
-        run('wget http://supergsego.com/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz')
-        run('tar xzvf apache-maven-3.2.5-bin.tar.gz')
+        run('wget http://supergsego.com/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz')
+        run('tar xzvf apache-maven-3.3.3-bin.tar.gz')
     # build adam
     with cd('adam'), shell_env(MAVEN_OPTS='-Xmx512m -XX:MaxPermSize=128m',
-                               MAVEN_HOME='~/apache-maven-3.2.5'):
-        run('~/apache-maven-3.2.5/bin/mvn clean package -DskipTests')
+                               MAVEN_HOME='~/apache-maven-3.3.3'):
+        run('~/apache-maven-3.3.3/bin/mvn clean package -DskipTests')
     # checkout samblaster
     with cd('~'):
         run('git clone https://www.github.com/gregoryfaust/samblaster.git')
@@ -151,19 +147,13 @@ def _configure_master_aptitude(spark_ver="1.1.1"):
         run('git clone https://github.com/broadgsa/gatk-protected.git')
     # build the gatk
     with cd('gatk-protected'), shell_env(MAVEN_OPTS='-Xmx512m -XX:MaxPermSize=128m',
-                                         MAVEN_HOME='~/apache-maven-3.2.5'):
-        run('~/apache-maven-3.2.5/bin/mvn package -DskipTests')
+                                         MAVEN_HOME='~/apache-maven-3.3.3'):
+        run('~/apache-maven-3.3.3/bin/mvn package -DskipTests')
     # pull down spark
-    if spark_ver is "1.2.1":
-        with cd('~'):
-            run('wget http://d3kbcqa49mib13.cloudfront.net/spark-1.2.1-bin-hadoop2.4.tgz')
-            run('tar xzvf spark-1.2.1-bin-hadoop2.4.tgz')
-            run('mv spark-1.2.1-bin-hadoop2.4 spark')
-    else:
-        with cd('~'):
-            run('wget http://d3kbcqa49mib13.cloudfront.net/spark-1.1.1-bin-hadoop2.4.tgz')
-            run('tar xzvf spark-1.1.1-bin-hadoop2.4.tgz')
-            run('mv spark-1.1.1-bin-hadoop2.4 spark')
+    with cd('~'):
+        run('wget http://d3kbcqa49mib13.cloudfront.net/spark-1.5.2-bin-hadoop2.6.tgz')
+        run('tar xzvf spark-1.5.2-bin-hadoop2.6.tgz')
+        run('mv spark-1.5.2-bin-hadoop2.6 spark')
 
     # make raid array
     with cd('~'):

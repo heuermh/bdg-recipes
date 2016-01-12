@@ -20,23 +20,23 @@ for papers).
 Our recipe book contains the following recipes:
 
 * Single node recipes:
-** [bqsr-head-to-head](bqsr-head-to-head/README.md): Runs a head-to-head single node speed test of the
+  * [bqsr-head-to-head](bqsr-head-to-head/README.md): Runs a head-to-head single node speed test of the
 [ADAM](https://www.github.com/bigdatagenomics/adam) and [GATK](https://www.github.com/broadgsa/gatk-protected)
 base quality score recalibration (BQSR) engines.
-** [flagstat-head-to-head](flagstat-head-to-head/README.md): Runs a head-to-head performance test of `Flagstat`
+  * [flagstat-head-to-head](flagstat-head-to-head/README.md): Runs a head-to-head performance test of `Flagstat`
 using [ADAM](https://www.github.com/bigdatagenomics/adam), [samtools](https://www.github.com/samtools/samtools),
 and [sambamba](https://www.github.com/lomereiter/sambamba).
-** [indel-realignment-head-to-head](indel-realignment-head-to-head/README.md): Runs a head-to-head single node speed test of the
+  * [indel-realignment-head-to-head](indel-realignment-head-to-head/README.md): Runs a head-to-head single node speed test of the
 [ADAM](https://www.github.com/bigdatagenomics/adam) and [GATK](https://www.github.com/broadgsa/gatk-protected)
 INDEL realignment engines.
-** [markdup-head-to-head](markdup-head-to-head/README.md): Runs a head-to-head performance test of duplicate marking
+  * [markdup-head-to-head](markdup-head-to-head/README.md): Runs a head-to-head performance test of duplicate marking
 using [ADAM](https://www.github.com/bigdatagenomics/adam), [samtools](https://www.github.com/samtools/samtools),
 and [sambamba](https://www.github.com/lomereiter/sambamba), and [picard](https://www.github.com/broadinstitute/picard).
-** [sort-head-to-head](sort-head-to-head/README.md): Runs a head-to-head performance test of sorting
+  * [sort-head-to-head](sort-head-to-head/README.md): Runs a head-to-head performance test of sorting
 using [ADAM](https://www.github.com/bigdatagenomics/adam), [samtools](https://www.github.com/samtools/samtools),
 and [sambamba](https://www.github.com/lomereiter/sambamba), and [picard](https://www.github.com/broadinstitute/picard).
 * Multiple node recipes:
-** [adam-transforms](adam-transforms/README.md): Runs scale-out performance testing on [ADAM](https://www.github.com/bigdatagenomics/adam)'s
+  * [adam-transforms](adam-transforms/README.md): Runs scale-out performance testing on [ADAM](https://www.github.com/bigdatagenomics/adam)'s
 BQSR, Flagstat, INDEL realignment, duplicate marking, and sort implementations.
 
 ## Running a Single Node Recipe
